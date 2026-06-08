@@ -1616,3 +1616,22 @@ input[type="color"] {
   .filter-select, .search-wrap { width: 100%; }
   .bracket-wrapper { gap: 24px; }
 }
+
+/* ═══════════════════════════════════════════════
+   PAGE TABS — Separate tab navigation system
+═══════════════════════════════════════════════ */
+.main-content { min-height: 60vh; }
+
+.page-tab { display: none; }
+.page-tab.active { display: block; }
+
+/* Footer fix — flat columns, no nested wrapper */
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+}
+
+/* Override old nested footer-links styles */
+.footer .footer-links { display: contents; }

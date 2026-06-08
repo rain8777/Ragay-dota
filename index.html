@@ -30,11 +30,11 @@
         <span class="brand-name">RAGAY <span class="brand-accent">DOTA HUB</span></span>
       </a>
       <nav class="nav-links" id="navLinks">
-        <a href="#directory" class="nav-link"><i class="fas fa-users"></i> Directory</a>
-        <a href="#teams" class="nav-link"><i class="fas fa-shield-halved"></i> Teams</a>
-        <a href="#tournaments" class="nav-link"><i class="fas fa-trophy"></i> Tournaments</a>
-        <a href="#brackets" class="nav-link"><i class="fas fa-sitemap"></i> Brackets</a>
-        <a href="#rankings" class="nav-link"><i class="fas fa-star"></i> Rankings</a>
+        <a href="#" class="nav-link active" data-tab="directory" onclick="switchTab('directory');return false;"><i class="fas fa-users"></i> Directory</a>
+        <a href="#" class="nav-link" data-tab="teams" onclick="switchTab('teams');return false;"><i class="fas fa-shield-halved"></i> Teams</a>
+        <a href="#" class="nav-link" data-tab="tournaments" onclick="switchTab('tournaments');return false;"><i class="fas fa-trophy"></i> Tournaments</a>
+        <a href="#" class="nav-link" data-tab="brackets" onclick="switchTab('brackets');return false;"><i class="fas fa-sitemap"></i> Brackets</a>
+        <a href="#" class="nav-link" data-tab="rankings" onclick="switchTab('rankings');return false;"><i class="fas fa-star"></i> Rankings</a>
         <button class="btn btn-primary" id="openRegisterModal"><i class="fas fa-user-plus"></i> Join Now</button>
         <!-- Auth buttons — toggled by JS -->
         <div class="nav-auth" id="navAuth">
@@ -46,7 +46,7 @@
               <span class="nav-user-role"  id="navUserRole"></span>
             </div>
             <div class="nav-user-dropdown" id="navUserDropdown">
-              <a href="#adminPanel" id="goAdminPanel"><i class="fas fa-tachometer-alt"></i> Admin Panel</a>
+              <a href="#" id="goAdminPanel"><i class="fas fa-tachometer-alt"></i> Admin Panel</a>
               <button id="navLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
           </div>
@@ -63,7 +63,7 @@
     <div class="hero-particles" id="heroParticles"></div>
     <div class="hero-bg"></div>
     <div class="container hero-content">
-      <div class="hero-badge"><i class="fas fa-map-marker-alt"></i> Ragay, Camarines Sur · Established 2024</div>
+      <div class="hero-badge"><i class="fas fa-map-marker-alt"></i> Ragay, Camarines Sur · Established 2026</div>
       <h1 class="hero-title">RAGAY<br /><span class="hero-accent">DOTA HUB</span></h1>
       <p class="hero-subtitle">
         The official Dota community directory for Ragay. Find players, build teams,
@@ -90,316 +90,279 @@
     <div class="container">
       <span class="announcement-dot"></span>
       <span id="announcementText"><strong>Next Tournament:</strong> Loading schedule... &nbsp;</span>
-      <a href="#tournaments">View details →</a>
+      <a href="#" onclick="switchTab('tournaments');return false;">View details →</a>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════
-       PLAYER DIRECTORY
+       MAIN TAB CONTENT
   ══════════════════════════════════════ -->
-  <section class="section" id="directory">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag"><i class="fas fa-users"></i> Player Directory</span>
-        <h2 class="section-title">Find Players in Ragay</h2>
-        <p class="section-subtitle">Browse all registered Dota players in your community. Filter by game, position, or MMR range.</p>
-      </div>
+  <main class="main-content">
 
-      <!-- Filters -->
-      <div class="filter-bar">
-        <div class="search-wrap">
-          <i class="fas fa-search"></i>
-          <input type="text" id="playerSearch" placeholder="Search by name, Steam ID, or Facebook…" />
-        </div>
-        <select id="filterGame" class="filter-select">
-          <option value="">All Games</option>
-          <option value="Dota 2">Dota 2</option>
-          <option value="Dota 1">Dota 1</option>
-          <option value="Both">Both</option>
-        </select>
-        <select id="filterPosition" class="filter-select">
-          <option value="">All Positions</option>
-          <option value="Carry">Carry (Pos 1)</option>
-          <option value="Mid">Mid (Pos 2)</option>
-          <option value="Offlane">Offlane (Pos 3)</option>
-          <option value="Soft Support">Soft Support (Pos 4)</option>
-          <option value="Hard Support">Hard Support (Pos 5)</option>
-        </select>
-        <select id="filterMMR" class="filter-select">
-          <option value="">All MMR</option>
-          <option value="uncalibrated">Uncalibrated</option>
-          <option value="0-2000">Herald–Guardian (0–2k)</option>
-          <option value="2000-3500">Crusader–Archon (2–3.5k)</option>
-          <option value="3500-5000">Legend–Ancient (3.5–5k)</option>
-          <option value="5000+">Divine–Immortal (5k+)</option>
-        </select>
-        <select id="filterLFT" class="filter-select">
-          <option value="">All Status</option>
-          <option value="true">Looking for Team</option>
-          <option value="false">Has Team</option>
-        </select>
-      </div>
-
-      <div class="players-grid" id="playersGrid">
-        <div class="empty-state" id="playersEmpty">
-          <i class="fas fa-user-slash"></i>
-          <p>No players yet. Be the first to register!</p>
-          <button class="btn btn-primary" id="emptyJoinBtn">Register Now</button>
-        </div>
-      </div>
-
-      <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
-        <button class="btn btn-outline" id="loadMoreBtn">Load More Players</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════
-       TEAMS
-  ══════════════════════════════════════ -->
-  <section class="section section-alt" id="teams">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag"><i class="fas fa-shield-halved"></i> Teams</span>
-        <h2 class="section-title">Ragay Dota Teams</h2>
-        <p class="section-subtitle">Active teams competing in local tournaments. Create your team and invite players.</p>
-      </div>
-
-      <div class="teams-toolbar">
-        <input type="text" id="teamSearch" class="search-input-sm" placeholder="Search teams…" />
-        <button class="btn btn-primary" id="openCreateTeamModal"><i class="fas fa-plus"></i> Create Team</button>
-      </div>
-
-      <div class="teams-grid" id="teamsGrid">
-        <div class="empty-state" id="teamsEmpty">
-          <i class="fas fa-shield-halved"></i>
-          <p>No teams yet. Create the first team in Ragay!</p>
-          <button class="btn btn-primary" id="emptyCreateTeamBtn">Create Team</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════
-       TOURNAMENTS
-  ══════════════════════════════════════ -->
-  <section class="section" id="tournaments">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag"><i class="fas fa-trophy"></i> Tournaments</span>
-        <h2 class="section-title">Local Tournaments</h2>
-        <p class="section-subtitle">Open and upcoming Dota 2 tournaments in Ragay. Register your team and compete.</p>
-      </div>
-
-      <div class="tournament-tabs">
-        <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
-        <button class="tab-btn" data-tab="ongoing">Ongoing</button>
-        <button class="tab-btn" data-tab="completed">Completed</button>
-      </div>
-
-      <div class="tournaments-list" id="tournamentsList">
-        <div class="empty-state" id="tournamentsEmpty">
-          <i class="fas fa-trophy"></i>
-          <p>No tournaments scheduled yet. Check back soon!</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════
-       BRACKETS
-  ══════════════════════════════════════ -->
-  <section class="section section-alt" id="brackets">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag"><i class="fas fa-sitemap"></i> Tournament Brackets</span>
-        <h2 class="section-title">Live Brackets</h2>
-        <p class="section-subtitle">Drag and drop teams into bracket slots. Brackets update in real-time for everyone.</p>
-      </div>
-
-      <div class="bracket-selector-wrap">
-        <label for="bracketTournamentSelect">Select Tournament:</label>
-        <select id="bracketTournamentSelect" class="filter-select">
-          <option value="">— Choose a tournament —</option>
-        </select>
-      </div>
-
-      <div class="bracket-container" id="bracketContainer">
-        <div class="empty-state">
-          <i class="fas fa-sitemap"></i>
-          <p>Select a tournament to view its bracket.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════
-       RANKINGS
-  ══════════════════════════════════════ -->
-  <section class="section" id="rankings">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag"><i class="fas fa-star"></i> Rankings</span>
-        <h2 class="section-title">Ragay Leaderboard</h2>
-        <p class="section-subtitle">Top players ranked by MMR, tournament wins, and match performance.</p>
-      </div>
-
-      <div class="ranking-tabs">
-        <button class="tab-btn active" data-ranktab="players">Players</button>
-        <button class="tab-btn" data-ranktab="teams">Teams</button>
-      </div>
-
-      <div id="rankingPlayersPanel" class="ranking-panel active">
-        <div class="ranking-table-wrap">
-          <table class="ranking-table" id="playerRankingTable">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Player</th>
-                <th>Game</th>
-                <th>Position</th>
-                <th>MMR</th>
-                <th>Team</th>
-                <th>Wins</th>
-              </tr>
-            </thead>
-            <tbody id="playerRankingBody">
-              <tr><td colspan="7" class="empty-row"><i class="fas fa-star"></i> No rankings yet.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="rankingTeamsPanel" class="ranking-panel">
-        <div class="ranking-table-wrap">
-          <table class="ranking-table" id="teamRankingTable">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Team</th>
-                <th>Members</th>
-                <th>Tournament Wins</th>
-                <th>Total Matches</th>
-                <th>Win Rate</th>
-              </tr>
-            </thead>
-            <tbody id="teamRankingBody">
-              <tr><td colspan="6" class="empty-row"><i class="fas fa-shield-halved"></i> No team rankings yet.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════
-       ADMIN PANEL (hidden until logged in)
-  ══════════════════════════════════════ -->
-  <section class="section section-alt hidden" id="adminPanel">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag admin-tag"><i class="fas fa-shield-alt"></i> <span id="adminPanelRoleLabel">Admin Panel</span></span>
-        <h2 class="section-title">Admin Dashboard</h2>
-        <p class="section-subtitle">Manage players, teams, tournaments, and admin accounts.</p>
-      </div>
-      <div class="admin-tabs" id="adminTabs">
-        <button class="tab-btn active" data-admintab="overview"><i class="fas fa-chart-bar"></i> Overview</button>
-        <button class="tab-btn" data-admintab="managePlayers"><i class="fas fa-users"></i> Players</button>
-        <button class="tab-btn" data-admintab="manageTeams"><i class="fas fa-shield-halved"></i> Teams</button>
-        <button class="tab-btn" data-admintab="manageTournaments"><i class="fas fa-trophy"></i> Tournaments</button>
-        <button class="tab-btn superadmin-only hidden" data-admintab="manageAdmins"><i class="fas fa-user-shield"></i> Admins</button>
-        <button class="tab-btn superadmin-only hidden" data-admintab="siteSettings"><i class="fas fa-cog"></i> Settings</button>
-      </div>
-
-      <!-- Overview -->
-      <div class="admin-panel active" id="adminPanelOverview">
-        <div class="admin-stats-grid">
-          <div class="admin-stat-card"><i class="fas fa-users"></i><div><span class="admin-stat-num" id="aStatPlayers">0</span><span class="admin-stat-lbl">Total Players</span></div></div>
-          <div class="admin-stat-card"><i class="fas fa-shield-halved"></i><div><span class="admin-stat-num" id="aStatTeams">0</span><span class="admin-stat-lbl">Total Teams</span></div></div>
-          <div class="admin-stat-card"><i class="fas fa-trophy"></i><div><span class="admin-stat-num" id="aStatTournaments">0</span><span class="admin-stat-lbl">Tournaments</span></div></div>
-          <div class="admin-stat-card"><i class="fas fa-search"></i><div><span class="admin-stat-num" id="aStatLFT">0</span><span class="admin-stat-lbl">LFT Players</span></div></div>
-        </div>
-        <div class="admin-quick-actions">
-          <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
-          <div class="quick-action-grid">
-            <button class="quick-action-btn" onclick="openCreateTeamModal()"><i class="fas fa-plus"></i> New Team</button>
-            <button class="quick-action-btn" id="qaNewTournament"><i class="fas fa-trophy"></i> New Tournament</button>
-            <button class="quick-action-btn superadmin-only hidden" id="qaNewAdmin"><i class="fas fa-user-shield"></i> Add Admin</button>
-            <button class="quick-action-btn" onclick="openModal('registerModalOverlay')"><i class="fas fa-user-plus"></i> Register Player</button>
+    <!-- DIRECTORY TAB -->
+    <div class="page-tab active" id="tab-directory">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag"><i class="fas fa-users"></i> Player Directory</span>
+            <h2 class="section-title">Find Players in Ragay</h2>
+            <p class="section-subtitle">Browse all registered Dota players in your community. Filter by game, position, or MMR range.</p>
+          </div>
+          <div class="filter-bar">
+            <div class="search-wrap">
+              <i class="fas fa-search"></i>
+              <input type="text" id="playerSearch" placeholder="Search by name, Steam ID, or Facebook…" />
+            </div>
+            <select id="filterGame" class="filter-select">
+              <option value="">All Games</option>
+              <option value="Dota 2">Dota 2</option>
+              <option value="Dota 1">Dota 1</option>
+              <option value="Both">Both</option>
+            </select>
+            <select id="filterPosition" class="filter-select">
+              <option value="">All Positions</option>
+              <option value="Carry">Carry (Pos 1)</option>
+              <option value="Mid">Mid (Pos 2)</option>
+              <option value="Offlane">Offlane (Pos 3)</option>
+              <option value="Soft Support">Soft Support (Pos 4)</option>
+              <option value="Hard Support">Hard Support (Pos 5)</option>
+            </select>
+            <select id="filterMMR" class="filter-select">
+              <option value="">All MMR</option>
+              <option value="uncalibrated">Uncalibrated</option>
+              <option value="0-2000">Herald–Guardian (0–2k)</option>
+              <option value="2000-3500">Crusader–Archon (2–3.5k)</option>
+              <option value="3500-5000">Legend–Ancient (3.5–5k)</option>
+              <option value="5000+">Divine–Immortal (5k+)</option>
+            </select>
+            <select id="filterLFT" class="filter-select">
+              <option value="">All Status</option>
+              <option value="true">Looking for Team</option>
+              <option value="false">Has Team</option>
+            </select>
+          </div>
+          <div class="players-grid" id="playersGrid">
+            <div class="empty-state" id="playersEmpty">
+              <i class="fas fa-user-slash"></i>
+              <p>No players yet. Be the first to register!</p>
+              <button class="btn btn-primary" id="emptyJoinBtn">Register Now</button>
+            </div>
+          </div>
+          <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+            <button class="btn btn-outline" id="loadMoreBtn">Load More Players</button>
           </div>
         </div>
-        <div class="admin-recent"><h3><i class="fas fa-clock"></i> Recent Registrations</h3><div id="adminRecentList" class="admin-recent-list"></div></div>
-      </div>
-
-      <!-- Manage Players -->
-      <div class="admin-panel" id="adminPanelManagePlayers">
-        <div class="admin-toolbar">
-          <input type="text" id="adminPlayerSearch" class="search-input-sm" placeholder="Search players…" />
-          <button class="btn btn-primary btn-sm" onclick="openModal('registerModalOverlay')"><i class="fas fa-plus"></i> Add Player</button>
-        </div>
-        <div class="admin-table-wrap">
-          <table class="admin-table"><thead><tr><th>Player</th><th>Game</th><th>Position</th><th>MMR</th><th>Team</th><th>LFT</th><th>Actions</th></tr></thead>
-          <tbody id="adminPlayersBody"></tbody></table>
-        </div>
-      </div>
-
-      <!-- Manage Teams -->
-      <div class="admin-panel" id="adminPanelManageTeams">
-        <div class="admin-toolbar">
-          <input type="text" id="adminTeamSearch2" class="search-input-sm" placeholder="Search teams…" />
-          <button class="btn btn-primary btn-sm" onclick="openCreateTeamModal()"><i class="fas fa-plus"></i> New Team</button>
-        </div>
-        <div class="admin-table-wrap">
-          <table class="admin-table"><thead><tr><th>Team</th><th>Tag</th><th>Members</th><th>Wins</th><th>Matches</th><th>Actions</th></tr></thead>
-          <tbody id="adminTeamsBody"></tbody></table>
-        </div>
-      </div>
-
-      <!-- Manage Tournaments -->
-      <div class="admin-panel" id="adminPanelManageTournaments">
-        <div class="admin-toolbar">
-          <span style="color:var(--text-secondary);font-size:.9rem;">Create and edit tournaments</span>
-          <button class="btn btn-primary btn-sm" id="openCreateTournamentModal"><i class="fas fa-plus"></i> New Tournament</button>
-        </div>
-        <div class="admin-table-wrap">
-          <table class="admin-table"><thead><tr><th>Name</th><th>Status</th><th>Format</th><th>Teams</th><th>Prize</th><th>Date</th><th>Actions</th></tr></thead>
-          <tbody id="adminTournamentsBody"></tbody></table>
-        </div>
-      </div>
-
-      <!-- Manage Admins (Super Admin only) -->
-      <div class="admin-panel superadmin-only" id="adminPanelManageAdmins">
-        <div class="admin-toolbar">
-          <span style="color:var(--text-secondary);font-size:.9rem;">Super Admin only — manage all admin accounts</span>
-          <button class="btn btn-primary btn-sm" id="openAddAdminModal"><i class="fas fa-user-plus"></i> Add Admin</button>
-        </div>
-        <div class="admin-table-wrap">
-          <table class="admin-table"><thead><tr><th>Username</th><th>Role</th><th>Permissions</th><th>Created</th><th>Last Login</th><th>Actions</th></tr></thead>
-          <tbody id="adminAccountsBody"></tbody></table>
-        </div>
-      </div>
-
-      <!-- Site Settings (Super Admin only) -->
-      <div class="admin-panel superadmin-only" id="adminPanelSiteSettings">
-        <div class="settings-grid">
-          <div class="settings-card">
-            <h3><i class="fas fa-bullhorn"></i> Announcement Bar</h3>
-            <div class="form-group"><label>Announcement Text</label><input type="text" id="settingAnnouncement" placeholder="e.g. Registration is now open!" /></div>
-            <button class="btn btn-primary btn-sm" id="saveAnnouncementBtn"><i class="fas fa-save"></i> Save</button>
-          </div>
-          <div class="settings-card">
-            <h3><i class="fas fa-key"></i> Change My Password</h3>
-            <div class="form-group"><label>Current Password</label><input type="password" id="settingOldPass" placeholder="••••••••" /></div>
-            <div class="form-group"><label>New Password</label><input type="password" id="settingNewPass" placeholder="••••••••" /></div>
-            <div class="form-group"><label>Confirm New Password</label><input type="password" id="settingConfirmPass" placeholder="••••••••" /></div>
-            <button class="btn btn-primary btn-sm" id="changePasswordBtn"><i class="fas fa-key"></i> Change Password</button>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
-  </section>
 
-  <!-- ── CTA BANNER ── -->
+    <!-- TEAMS TAB -->
+    <div class="page-tab" id="tab-teams">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag"><i class="fas fa-shield-halved"></i> Teams</span>
+            <h2 class="section-title">Ragay Dota Teams</h2>
+            <p class="section-subtitle">Active teams competing in local tournaments. Create your team and invite players.</p>
+          </div>
+          <div class="teams-toolbar">
+            <input type="text" id="teamSearch" class="search-input-sm" placeholder="Search teams…" />
+            <button class="btn btn-primary" id="openCreateTeamModal"><i class="fas fa-plus"></i> Create Team</button>
+          </div>
+          <div class="teams-grid" id="teamsGrid">
+            <div class="empty-state" id="teamsEmpty">
+              <i class="fas fa-shield-halved"></i>
+              <p>No teams yet. Create the first team in Ragay!</p>
+              <button class="btn btn-primary" id="emptyCreateTeamBtn">Create Team</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- TOURNAMENTS TAB -->
+    <div class="page-tab" id="tab-tournaments">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag"><i class="fas fa-trophy"></i> Tournaments</span>
+            <h2 class="section-title">Local Tournaments</h2>
+            <p class="section-subtitle">Open and upcoming Dota 2 tournaments in Ragay. Register your team and compete.</p>
+          </div>
+          <div class="tournament-tabs">
+            <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+            <button class="tab-btn" data-tab="ongoing">Ongoing</button>
+            <button class="tab-btn" data-tab="completed">Completed</button>
+          </div>
+          <div class="tournaments-list" id="tournamentsList">
+            <div class="empty-state" id="tournamentsEmpty">
+              <i class="fas fa-trophy"></i>
+              <p>No tournaments scheduled yet. Check back soon!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- BRACKETS TAB -->
+    <div class="page-tab" id="tab-brackets">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag"><i class="fas fa-sitemap"></i> Tournament Brackets</span>
+            <h2 class="section-title">Live Brackets</h2>
+            <p class="section-subtitle">Drag and drop teams into bracket slots. Brackets update in real-time for everyone.</p>
+          </div>
+          <div class="bracket-selector-wrap">
+            <label for="bracketTournamentSelect">Select Tournament:</label>
+            <select id="bracketTournamentSelect" class="filter-select">
+              <option value="">— Choose a tournament —</option>
+            </select>
+          </div>
+          <div class="bracket-container" id="bracketContainer">
+            <div class="empty-state">
+              <i class="fas fa-sitemap"></i>
+              <p>Select a tournament to view its bracket.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- RANKINGS TAB -->
+    <div class="page-tab" id="tab-rankings">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag"><i class="fas fa-star"></i> Rankings</span>
+            <h2 class="section-title">Ragay Leaderboard</h2>
+            <p class="section-subtitle">Top players ranked by MMR, tournament wins, and match performance.</p>
+          </div>
+          <div class="ranking-tabs">
+            <button class="tab-btn active" data-ranktab="players">Players</button>
+            <button class="tab-btn" data-ranktab="teams">Teams</button>
+          </div>
+          <div id="rankingPlayersPanel" class="ranking-panel active">
+            <div class="ranking-table-wrap">
+              <table class="ranking-table" id="playerRankingTable">
+                <thead><tr><th>#</th><th>Player</th><th>Game</th><th>Position</th><th>MMR</th><th>Team</th><th>Wins</th></tr></thead>
+                <tbody id="playerRankingBody">
+                  <tr><td colspan="7" class="empty-row"><i class="fas fa-star"></i> No rankings yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="rankingTeamsPanel" class="ranking-panel">
+            <div class="ranking-table-wrap">
+              <table class="ranking-table" id="teamRankingTable">
+                <thead><tr><th>#</th><th>Team</th><th>Members</th><th>Tournament Wins</th><th>Total Matches</th><th>Win Rate</th></tr></thead>
+                <tbody id="teamRankingBody">
+                  <tr><td colspan="6" class="empty-row"><i class="fas fa-shield-halved"></i> No team rankings yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ADMIN PANEL TAB (hidden until logged in) -->
+    <div class="page-tab" id="tab-admin">
+      <section class="section hidden" id="adminPanel">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag admin-tag"><i class="fas fa-shield-alt"></i> <span id="adminPanelRoleLabel">Admin Panel</span></span>
+            <h2 class="section-title">Admin Dashboard</h2>
+            <p class="section-subtitle">Manage players, teams, tournaments, and admin accounts.</p>
+          </div>
+          <div class="admin-tabs" id="adminTabs">
+            <button class="tab-btn active" data-admintab="overview"><i class="fas fa-chart-bar"></i> Overview</button>
+            <button class="tab-btn" data-admintab="managePlayers"><i class="fas fa-users"></i> Players</button>
+            <button class="tab-btn" data-admintab="manageTeams"><i class="fas fa-shield-halved"></i> Teams</button>
+            <button class="tab-btn" data-admintab="manageTournaments"><i class="fas fa-trophy"></i> Tournaments</button>
+            <button class="tab-btn superadmin-only hidden" data-admintab="manageAdmins"><i class="fas fa-user-shield"></i> Admins</button>
+            <button class="tab-btn superadmin-only hidden" data-admintab="siteSettings"><i class="fas fa-cog"></i> Settings</button>
+          </div>
+          <div class="admin-panel active" id="adminPanelOverview">
+            <div class="admin-stats-grid">
+              <div class="admin-stat-card"><i class="fas fa-users"></i><div><span class="admin-stat-num" id="aStatPlayers">0</span><span class="admin-stat-lbl">Total Players</span></div></div>
+              <div class="admin-stat-card"><i class="fas fa-shield-halved"></i><div><span class="admin-stat-num" id="aStatTeams">0</span><span class="admin-stat-lbl">Total Teams</span></div></div>
+              <div class="admin-stat-card"><i class="fas fa-trophy"></i><div><span class="admin-stat-num" id="aStatTournaments">0</span><span class="admin-stat-lbl">Tournaments</span></div></div>
+              <div class="admin-stat-card"><i class="fas fa-search"></i><div><span class="admin-stat-num" id="aStatLFT">0</span><span class="admin-stat-lbl">LFT Players</span></div></div>
+            </div>
+            <div class="admin-quick-actions">
+              <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+              <div class="quick-action-grid">
+                <button class="quick-action-btn" onclick="openCreateTeamModal()"><i class="fas fa-plus"></i> New Team</button>
+                <button class="quick-action-btn" id="qaNewTournament"><i class="fas fa-trophy"></i> New Tournament</button>
+                <button class="quick-action-btn superadmin-only hidden" id="qaNewAdmin"><i class="fas fa-user-shield"></i> Add Admin</button>
+                <button class="quick-action-btn" onclick="openModal('registerModalOverlay')"><i class="fas fa-user-plus"></i> Register Player</button>
+              </div>
+            </div>
+            <div class="admin-recent"><h3><i class="fas fa-clock"></i> Recent Registrations</h3><div id="adminRecentList" class="admin-recent-list"></div></div>
+          </div>
+          <div class="admin-panel" id="adminPanelManagePlayers">
+            <div class="admin-toolbar">
+              <input type="text" id="adminPlayerSearch" class="search-input-sm" placeholder="Search players…" />
+              <button class="btn btn-primary btn-sm" onclick="openModal('registerModalOverlay')"><i class="fas fa-plus"></i> Add Player</button>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table"><thead><tr><th>Player</th><th>Game</th><th>Position</th><th>MMR</th><th>Team</th><th>LFT</th><th>Actions</th></tr></thead>
+              <tbody id="adminPlayersBody"></tbody></table>
+            </div>
+          </div>
+          <div class="admin-panel" id="adminPanelManageTeams">
+            <div class="admin-toolbar">
+              <input type="text" id="adminTeamSearch2" class="search-input-sm" placeholder="Search teams…" />
+              <button class="btn btn-primary btn-sm" onclick="openCreateTeamModal()"><i class="fas fa-plus"></i> New Team</button>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table"><thead><tr><th>Team</th><th>Tag</th><th>Members</th><th>Wins</th><th>Matches</th><th>Actions</th></tr></thead>
+              <tbody id="adminTeamsBody"></tbody></table>
+            </div>
+          </div>
+          <div class="admin-panel" id="adminPanelManageTournaments">
+            <div class="admin-toolbar">
+              <span style="color:var(--text-secondary);font-size:.9rem;">Create and edit tournaments</span>
+              <button class="btn btn-primary btn-sm" id="openCreateTournamentModal"><i class="fas fa-plus"></i> New Tournament</button>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table"><thead><tr><th>Name</th><th>Status</th><th>Format</th><th>Teams</th><th>Prize</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody id="adminTournamentsBody"></tbody></table>
+            </div>
+          </div>
+          <div class="admin-panel superadmin-only" id="adminPanelManageAdmins">
+            <div class="admin-toolbar">
+              <span style="color:var(--text-secondary);font-size:.9rem;">Super Admin only — manage all admin accounts</span>
+              <button class="btn btn-primary btn-sm" id="openAddAdminModal"><i class="fas fa-user-plus"></i> Add Admin</button>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table"><thead><tr><th>Username</th><th>Role</th><th>Permissions</th><th>Created</th><th>Last Login</th><th>Actions</th></tr></thead>
+              <tbody id="adminAccountsBody"></tbody></table>
+            </div>
+          </div>
+          <div class="admin-panel superadmin-only" id="adminPanelSiteSettings">
+            <div class="settings-grid">
+              <div class="settings-card">
+                <h3><i class="fas fa-bullhorn"></i> Announcement Bar</h3>
+                <div class="form-group"><label>Announcement Text</label><input type="text" id="settingAnnouncement" placeholder="e.g. Registration is now open!" /></div>
+                <button class="btn btn-primary btn-sm" id="saveAnnouncementBtn"><i class="fas fa-save"></i> Save</button>
+              </div>
+              <div class="settings-card">
+                <h3><i class="fas fa-key"></i> Change My Password</h3>
+                <div class="form-group"><label>Current Password</label><input type="password" id="settingOldPass" placeholder="••••••••" /></div>
+                <div class="form-group"><label>New Password</label><input type="password" id="settingNewPass" placeholder="••••••••" /></div>
+                <div class="form-group"><label>Confirm New Password</label><input type="password" id="settingConfirmPass" placeholder="••••••••" /></div>
+                <button class="btn btn-primary btn-sm" id="changePasswordBtn"><i class="fas fa-key"></i> Change Password</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- CTA BANNER -->
   <section class="cta-section">
     <div class="container cta-inner">
       <div>
@@ -410,42 +373,34 @@
     </div>
   </section>
 
-  <!-- ── FOOTER ── -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
         <a href="#" class="brand"><span class="brand-icon">⚔️</span><span class="brand-name">RAGAY <span class="brand-accent">DOTA HUB</span></span></a>
-        <p>The official Dota community directory for Ragay, Camarines Sur. All data is sourced from player registrations.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-          <a href="#" aria-label="Steam"><i class="fab fa-steam"></i></a>
-        </div>
+        <p>The official Dota community directory for Ragay, Camarines Sur.</p>
       </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h4>Community</h4>
-          <a href="#directory"><i class="fas fa-users"></i> Player Directory</a>
-          <a href="#teams"><i class="fas fa-shield-halved"></i> Teams</a>
-          <a href="#rankings"><i class="fas fa-star"></i> Rankings</a>
-        </div>
-        <div class="footer-col">
-          <h4>Tournaments</h4>
-          <a href="#tournaments"><i class="fas fa-trophy"></i> All Tournaments</a>
-          <a href="#brackets"><i class="fas fa-sitemap"></i> Brackets</a>
-        </div>
-        <div class="footer-col">
-          <h4>About</h4>
-          <a href="#"><i class="fas fa-info-circle"></i> About Us</a>
-          <a href="#"><i class="fas fa-envelope"></i> Contact</a>
-          <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
-        </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="#" onclick="switchTab('directory');return false;"><i class="fas fa-users"></i> Player Directory</a>
+        <a href="#" onclick="switchTab('teams');return false;"><i class="fas fa-shield-halved"></i> Teams</a>
+        <a href="#" onclick="switchTab('rankings');return false;"><i class="fas fa-star"></i> Rankings</a>
+      </div>
+      <div class="footer-col">
+        <h4>Tournaments</h4>
+        <a href="#" onclick="switchTab('tournaments');return false;"><i class="fas fa-trophy"></i> All Tournaments</a>
+        <a href="#" onclick="switchTab('brackets');return false;"><i class="fas fa-sitemap"></i> Brackets</a>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="#"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <p>© 2026 Ragay Dota Hub. Built for the Ragay gaming community. Powered by Google Sheets & Apps Script.</p>
-        <p>Dota 2 is a trademark of Valve Corporation. Not affiliated with Valve.</p>
+        <p>© 2026 Ragay Dota Hub. Built for the Ragay gaming community.</p>
       </div>
     </div>
   </footer>

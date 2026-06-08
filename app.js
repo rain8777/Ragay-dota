@@ -36,6 +36,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ══════════════════════════════════════════════════════════
+   PAGE TAB SWITCHER
+══════════════════════════════════════════════════════════ */
+function switchTab(name) {
+  // Hide all page tabs
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  // Show the target tab
+  const target = document.getElementById('tab-' + name);
+  if (target) target.classList.add('active');
+  // Update nav link active state
+  document.querySelectorAll('.nav-link[data-tab]').forEach(l => {
+    l.classList.toggle('active', l.dataset.tab === name);
+  });
+  // Close mobile menu
+  document.getElementById('navLinks')?.classList.remove('open');
+  document.getElementById('hamburger')?.classList.remove('open');
+  // Scroll to top of content
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Re-render bracket when switching to brackets tab
+  if (name === 'brackets') renderBracket();
+}
+
+/* ══════════════════════════════════════════════════════════
    LOADER
 ══════════════════════════════════════════════════════════ */
 function runLoader() {
@@ -105,7 +127,6 @@ function initNavbar() {
   const navLinks  = document.getElementById('navLinks');
   window.addEventListener('scroll', () => {
     navbar?.classList.toggle('scrolled', window.scrollY > 10);
-    updateActiveNavLink();
   });
   hamburger?.addEventListener('click', () => {
     const open = navLinks.classList.toggle('open');
@@ -117,14 +138,6 @@ function initNavbar() {
   }));
 }
 
-function updateActiveNavLink() {
-  const ids = ['directory','teams','tournaments','brackets','rankings'];
-  const y = window.scrollY + 120;
-  let active = '';
-  ids.forEach(id => { const el = document.getElementById(id); if (el && el.offsetTop <= y) active = id; });
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${active}`));
-}
-
 /* ══════════════════════════════════════════════════════════
    MODALS
 ══════════════════════════════════════════════════════════ */
@@ -133,13 +146,13 @@ function initModals() {
     document.getElementById(id)?.addEventListener('click', () => openModal('registerModalOverlay'))
   );
   document.getElementById('closeRegisterModal')?.addEventListener('click', () => closeModal('registerModalOverlay'));
-  document.getElementById('successCloseBtn')?.addEventListener('click', () => { closeModal('registerModalOverlay'); scrollTo('directory'); });
+  document.getElementById('successCloseBtn')?.addEventListener('click', () => { closeModal('registerModalOverlay'); switchTab('directory'); });
 
   ['openCreateTeamModal','emptyCreateTeamBtn'].forEach(id =>
     document.getElementById(id)?.addEventListener('click', () => openCreateTeamModal())
   );
   document.getElementById('closeCreateTeamModal')?.addEventListener('click', () => closeModal('createTeamModalOverlay'));
-  document.getElementById('teamSuccessCloseBtn')?.addEventListener('click', () => { closeModal('createTeamModalOverlay'); scrollTo('teams'); });
+  document.getElementById('teamSuccessCloseBtn')?.addEventListener('click', () => { closeModal('createTeamModalOverlay'); switchTab('teams'); });
 
   document.getElementById('closePlayerProfile')?.addEventListener('click', () => closeModal('playerProfileOverlay'));
 
@@ -606,8 +619,7 @@ function enrollTeam(tournamentId) {
 function viewBracket(id) {
   document.getElementById('bracketTournamentSelect').value = id;
   State.activeBracketId = id;
-  renderBracket();
-  document.getElementById('brackets')?.scrollIntoView({ behavior:'smooth' });
+  switchTab('brackets');
 }
 
 /* ══════════════════════════════════════════════════════════

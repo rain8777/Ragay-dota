@@ -244,7 +244,7 @@ function showAdminPanel() {
   if (roleLabel) roleLabel.textContent = ROLE_LABELS[Auth.currentUser?.role] || 'Admin';
 
   refreshAdminPanels();
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  switchTab('admin');
 }
 
 function hideAdminPanel() {
@@ -661,7 +661,7 @@ function initTournamentModal() {
   document.getElementById('closeCreateTournamentModal')?.addEventListener('click', () => closeAuthModal('createTournamentModalOverlay'));
   document.getElementById('tournamentSuccessClose')?.addEventListener('click', () => {
     closeAuthModal('createTournamentModalOverlay');
-    scrollTo('tournaments');
+    switchTab('tournaments');
   });
   document.getElementById('createTournamentForm')?.addEventListener('submit', handleCreateTournament);
 }
