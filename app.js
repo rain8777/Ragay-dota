@@ -51,10 +51,17 @@ function switchTab(name) {
   // Close mobile menu
   document.getElementById('navLinks')?.classList.remove('open');
   document.getElementById('hamburger')?.classList.remove('open');
+  // Hide hero so tab content starts at top
+  document.getElementById('home')?.classList.add('hero-hidden');
   // Scroll to top of content
   window.scrollTo({ top: 0, behavior: 'smooth' });
   // Re-render bracket when switching to brackets tab
   if (name === 'brackets') renderBracket();
+}
+
+function goHome() {
+  document.getElementById('home')?.classList.remove('hero-hidden');
+  switchTab('directory');
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -136,6 +143,7 @@ function initNavbar() {
   navLinks?.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
     navLinks.classList.remove('open'); hamburger?.classList.remove('open');
   }));
+  document.querySelector('.brand')?.addEventListener('click', e => { e.preventDefault(); goHome(); });
 }
 
 /* ══════════════════════════════════════════════════════════

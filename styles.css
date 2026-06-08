@@ -352,6 +352,8 @@ textarea { resize: vertical; }
   overflow: hidden;
 }
 
+.hero.hero-hidden { display: none; }
+
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -1625,13 +1627,4 @@ input[type="color"] {
 .page-tab { display: none; }
 .page-tab.active { display: block; }
 
-/* Footer fix — flat columns, no nested wrapper */
-.footer-inner {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr;
-  gap: 48px;
-  padding-bottom: 48px;
-}
 
-/* Override old nested footer-links styles */
-.footer .footer-links { display: contents; }

@@ -297,16 +297,10 @@ function refreshAdminPanels() {
 /* ── Overview ── */
 function refreshAdminOverview() {
   const lft = State.players.filter(p => p.lft).length;
-  document.getElementById('aStatPlayers')?.textContent     && (document.getElementById('aStatPlayers').textContent     = State.players.length);
-  document.getElementById('aStatTeams')?.textContent      && (document.getElementById('aStatTeams').textContent      = State.teams.length);
-  document.getElementById('aStatTournaments')?.textContent && (document.getElementById('aStatTournaments').textContent = State.tournaments.length);
-  document.getElementById('aStatLFT')?.textContent         && (document.getElementById('aStatLFT').textContent         = lft);
-
-  // Set values directly
-  if(document.getElementById('aStatPlayers'))     document.getElementById('aStatPlayers').textContent     = State.players.length;
-  if(document.getElementById('aStatTeams'))       document.getElementById('aStatTeams').textContent       = State.teams.length;
-  if(document.getElementById('aStatTournaments')) document.getElementById('aStatTournaments').textContent = State.tournaments.length;
-  if(document.getElementById('aStatLFT'))         document.getElementById('aStatLFT').textContent         = lft;
+  if (document.getElementById('aStatPlayers'))     document.getElementById('aStatPlayers').textContent     = State.players.length;
+  if (document.getElementById('aStatTeams'))       document.getElementById('aStatTeams').textContent       = State.teams.length;
+  if (document.getElementById('aStatTournaments')) document.getElementById('aStatTournaments').textContent = State.tournaments.length;
+  if (document.getElementById('aStatLFT'))         document.getElementById('aStatLFT').textContent         = lft;
 
   const recentList = document.getElementById('adminRecentList');
   if (recentList) {
