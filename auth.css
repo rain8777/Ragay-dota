@@ -1,0 +1,462 @@
+/* ═══════════════════════════════════════════════
+   RAGAY DOTA HUB — Auth & Admin Styles
+═══════════════════════════════════════════════ */
+
+/* ── HIDDEN UTILITY ── */
+.hidden { display: none !important; }
+
+/* ══════════════════════════════════════════════
+   NAV AUTH AREA
+══════════════════════════════════════════════ */
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 4px;
+}
+
+/* User pill in navbar */
+.nav-user { position: relative; }
+
+.nav-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all var(--transition);
+  user-select: none;
+}
+.nav-user-pill:hover { border-color: var(--dota-gold-dark); }
+
+.nav-user-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dota-red-dark), var(--dota-gold-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-primary);
+  font-size: .72rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.nav-user-name {
+  font-family: var(--font-primary);
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: .03em;
+}
+
+.nav-user-role {
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.nav-user-role.role-superadmin  { background: rgba(200,168,75,.18); color: var(--dota-gold); }
+.nav-user-role.role-organizer   { background: rgba(87,195,85,.15);  color: #57c355; }
+.nav-user-role.role-teambuilder { background: rgba(96,212,224,.12); color: #60d4e0; }
+.nav-user-role.role-moderator   { background: rgba(194,59,34,.15);  color: var(--text-red); }
+
+/* Dropdown */
+.nav-user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 180px;
+  background: var(--bg-dark);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0,0,0,.6);
+  z-index: 2000;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: all .18s ease;
+}
+.nav-user-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-user-dropdown a,
+.nav-user-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: .88rem;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+  text-align: left;
+  border-bottom: 1px solid var(--bg-border);
+}
+.nav-user-dropdown a:last-child,
+.nav-user-dropdown button:last-child { border-bottom: none; }
+.nav-user-dropdown a:hover,
+.nav-user-dropdown button:hover { background: var(--bg-card-hover); color: var(--dota-gold); }
+.nav-user-dropdown i { font-size: .82rem; color: var(--text-muted); }
+.nav-user-dropdown button:last-child { color: var(--text-red); }
+.nav-user-dropdown button:last-child i { color: var(--text-red); }
+
+/* ══════════════════════════════════════════════
+   LOGIN MODAL
+══════════════════════════════════════════════ */
+.modal-sm { max-width: 420px; }
+
+.login-hero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.login-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dota-red-dark), var(--dota-gold-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  color: var(--dota-gold);
+  margin: 0 auto 12px;
+  box-shadow: 0 0 24px var(--dota-gold-glow);
+}
+.login-hero p { color: var(--text-muted); font-size: .88rem; }
+
+.input-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-icon-wrap > i:first-child {
+  position: absolute;
+  left: 12px;
+  color: var(--text-muted);
+  font-size: .85rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.input-icon-wrap input {
+  padding-left: 36px !important;
+  width: 100%;
+}
+.toggle-pw {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  font-size: .82rem;
+  transition: color var(--transition);
+}
+.toggle-pw:hover { color: var(--dota-gold); }
+
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(194,59,34,.12);
+  border: 1px solid rgba(194,59,34,.25);
+  border-radius: var(--radius-sm);
+  color: var(--text-red);
+  font-size: .86rem;
+  margin-bottom: 14px;
+}
+
+/* ══════════════════════════════════════════════
+   ADMIN PANEL
+══════════════════════════════════════════════ */
+.admin-tag { background: rgba(194,59,34,.12) !important; color: var(--text-red) !important; border-color: rgba(194,59,34,.25) !important; }
+
+.admin-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--bg-border);
+  padding-bottom: 0;
+}
+
+.admin-panel { display: none; }
+.admin-panel.active { display: block; }
+
+/* Overview stats */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.admin-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all var(--transition);
+}
+.admin-stat-card:hover { border-color: var(--bg-border-light); box-shadow: var(--shadow-card); }
+.admin-stat-card > i {
+  font-size: 1.6rem;
+  color: var(--dota-gold);
+  opacity: .7;
+  flex-shrink: 0;
+}
+.admin-stat-num {
+  display: block;
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.admin-stat-lbl {
+  font-size: .72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Quick actions */
+.admin-quick-actions {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.admin-quick-actions h3 {
+  font-family: var(--font-primary);
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin-quick-actions h3 i { color: var(--dota-gold); }
+
+.quick-action-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--bg-panel);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: .86rem;
+  font-family: var(--font-primary);
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.quick-action-btn:hover { border-color: var(--dota-gold-dark); color: var(--dota-gold); background: rgba(200,168,75,.08); }
+.quick-action-btn i { font-size: .8rem; color: var(--dota-gold); }
+
+/* Recent list */
+.admin-recent {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.admin-recent h3 {
+  font-family: var(--font-primary);
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin-recent h3 i { color: var(--dota-gold); }
+.admin-recent-list { display: flex; flex-direction: column; gap: 8px; }
+.admin-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--bg-panel);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--bg-border);
+}
+.admin-recent-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-primary);
+  font-size: .78rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.admin-recent-info { flex: 1; }
+.admin-recent-name { font-size: .88rem; font-weight: 600; color: var(--text-primary); font-family: var(--font-primary); }
+.admin-recent-meta { font-size: .76rem; color: var(--text-muted); }
+.admin-recent-time { font-size: .74rem; color: var(--text-muted); white-space: nowrap; }
+
+/* Admin tables */
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .87rem;
+}
+.admin-table th {
+  background: var(--bg-panel);
+  color: var(--text-muted);
+  font-family: var(--font-primary);
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--bg-border);
+  white-space: nowrap;
+}
+.admin-table td {
+  padding: 12px 16px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--bg-border);
+  vertical-align: middle;
+}
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: var(--bg-card-hover); }
+
+.admin-table-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Permissions grid */
+.permissions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+/* Settings */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.settings-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.settings-card h3 {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.settings-card h3 i { color: var(--dota-gold); }
+
+/* Role badge in admin table */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.role-badge.superadmin        { background: rgba(200,168,75,.18);  color: var(--dota-gold);  }
+.role-badge.tournament_organizer { background: rgba(87,195,85,.15); color: #57c355; }
+.role-badge.team_builder       { background: rgba(96,212,224,.12); color: #60d4e0; }
+.role-badge.moderator          { background: rgba(194,59,34,.15);  color: var(--text-red); }
+
+/* ══════════════════════════════════════════════
+   ACCESS DENIED OVERLAY (for locked sections)
+══════════════════════════════════════════════ */
+.access-denied-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,11,15,.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--radius);
+}
+.access-denied-box {
+  text-align: center;
+  padding: 40px 32px;
+}
+.access-denied-box i { font-size: 3rem; color: var(--dota-gold); margin-bottom: 16px; display: block; opacity: .5; }
+.access-denied-box h3 { font-family: var(--font-primary); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 8px; }
+.access-denied-box p { color: var(--text-muted); font-size: .88rem; margin-bottom: 20px; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .nav-user-name { display: none; }
+  .permissions-grid { grid-template-columns: 1fr; }
+  .admin-stats-grid { grid-template-columns: 1fr 1fr; }
+  .settings-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 540px) {
+  .admin-stats-grid { grid-template-columns: 1fr; }
+  .admin-tabs { gap: 4px; }
+  .admin-tabs .tab-btn { padding: 8px 10px; font-size: .78rem; }
+}
